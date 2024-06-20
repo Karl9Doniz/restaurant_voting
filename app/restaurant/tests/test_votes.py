@@ -51,7 +51,6 @@ class VotingResultsTests(TestCase):
 
     def test_no_votes(self):
         """Test case when no votes have been cast"""
-        restaurant = create_restaurant()
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
