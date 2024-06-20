@@ -62,9 +62,11 @@ class Menu(models.Model):
 
 class Vote(models.Model):
     employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='votes')
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='votes')
-    vote_value = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, related_name='votes')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('employee', 'menu')
 
     def __str__(self):
-        return f"{self.employee.username} voted for {self.menu.restaurant.name} on {self.menu.date}"
+        return f"{self.employee.email} voted for {self.menu}"

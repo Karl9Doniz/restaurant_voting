@@ -12,13 +12,13 @@ class MenuSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class VoteSerializer(serializers.ModelSerializer):
+    employee = serializers.StringRelatedField()
+
     class Meta:
         model = Vote
-        fields = ['id', 'employee', 'menu', 'vote_value']
-        read_only_fields = ['employee']
+        fields = ['employee']
 
-    def create(self, validated_data):
-        request = self.context.get('request')
-        if request and hasattr(request, 'user'):
-            validated_data['employee'] = request.user
-        return super().create(validated_data)
+class VotingResultSerializer(serializers.Serializer):
+    menu = serializers.StringRelatedField()
+    vote_count = serializers.IntegerField()
+    votes = VoteSerializer(many=True)

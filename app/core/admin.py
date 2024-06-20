@@ -43,3 +43,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Restaurant)
+admin.site.register(models.Menu)
