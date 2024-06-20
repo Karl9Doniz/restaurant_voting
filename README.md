@@ -18,6 +18,6 @@ Clone repository, the go to the directory of the project.
 
 ```docker-compose up```
 
-To view the admin page, go to http://localhost:8000/admin.
+To view the admin page, go to [http://localhost:8000/admin.](http://127.0.0.1:8000/admin/login/?next=/admin/).
 
-To view API's, go to [http://localhost:8000/api/docs](http://127.0.0.1:8000/api/docs/#/)
+To view API's, go to [[http://localhost:8000/api/docs](http://127.0.0.1:8000/api/docs/#/)](http://127.0.0.1:8000/api/docs/).
