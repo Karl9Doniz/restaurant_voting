@@ -65,8 +65,10 @@ class Menu(models.Model):
 
 
 class Vote(models.Model):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="votes")
-    menu = models.ForeignKey("Menu", on_delete=models.CASCADE, related_name="votes")
+    employee = models.ForeignKey(User, on_delete=models.CASCADE,
+                                related_name="votes")
+    menu = models.ForeignKey("Menu", on_delete=models.CASCADE,
+                            related_name="votes")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

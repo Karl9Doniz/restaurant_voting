@@ -45,13 +45,13 @@ class VotingResultsTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.user = create_user(email="test@example.com", password="testpass123")
+        self.user = create_user(email="test@example.com",
+                                password="testpass123")
         self.client.force_authenticate(self.user)
 
     def test_no_votes(self):
         """Test case when no votes have been cast"""
         restaurant = create_restaurant()
-        menu = create_menu(restaurant)
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -68,7 +68,8 @@ class VotingResultsTests(TestCase):
         restaurant = create_restaurant()
         menu = create_menu(restaurant)
         create_vote(self.user, menu)
-        another_user = create_user(email="another@example.com", password="testpass123")
+        another_user = create_user(email="another@example.com",
+                                   password="testpass123")
         create_vote(another_user, menu)
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -81,7 +82,8 @@ class VotingResultsTests(TestCase):
             restaurant, date=timezone.now().date() + timezone.timedelta(days=1)
         )
         create_vote(self.user, menu1)
-        another_user = create_user(email="another@example.com", password="testpass123")
+        another_user = create_user(email="another@example.com",
+                                   password="testpass123")
         create_vote(another_user, menu2)
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)

@@ -90,8 +90,6 @@ class PrivateRestaurantAPITests(TestCase):
 def test_list_menus(self):
     """Test listing menus for a restaurant"""
     restaurant = create_restaurant()
-    menu1 = create_menu(restaurant=restaurant, date="2024-06-20")
-    menu2 = create_menu(restaurant=restaurant, date="2024-06-21")
     res = self.client.get(MENUS_URL)
     self.assertEqual(res.status_code, status.HTTP_200_OK)
 
