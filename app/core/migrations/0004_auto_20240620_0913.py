@@ -6,21 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0003_vote'),
+        ("core", "0003_vote"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='vote',
-            old_name='created_at',
-            new_name='timestamp',
+            model_name="vote",
+            old_name="created_at",
+            new_name="timestamp",
         ),
         migrations.AlterUniqueTogether(
-            name='vote',
-            unique_together={('employee', 'menu')},
+            name="vote",
+            unique_together={("employee", "menu")},
         ),
         migrations.RemoveField(
-            model_name='vote',
-            name='vote_value',
+            model_name="vote",
+            name="vote_value",
         ),
     ]

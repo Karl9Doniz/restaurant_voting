@@ -8,38 +8,44 @@ from core.models import Restaurant, Menu, Vote
 
 User = get_user_model()
 
-VOTING_RESULTS_URL = reverse('restaurant:voting-list')
+VOTING_RESULTS_URL = reverse("restaurant:voting-list")
+
 
 def create_user(**params):
     """Helper function to create a new user"""
     return User.objects.create_user(**params)
 
+
 def create_restaurant(**params):
     """Helper function to create a new restaurant"""
     defaults = {
-        'name': 'Sample Restaurant',
+        "name": "Sample Restaurant",
     }
     defaults.update(params)
     return Restaurant.objects.create(**defaults)
 
+
 def create_menu(restaurant, **params):
     """Helper function to create a new menu"""
     defaults = {
-        'date': timezone.now().date(),
-        'items': 'Pizza, Salad, Pasta',
+        "date": timezone.now().date(),
+        "items": "Pizza, Salad, Pasta",
     }
     defaults.update(params)
     return Menu.objects.create(restaurant=restaurant, **defaults)
+
 
 def create_vote(employee, menu):
     """Helper function to create a new vote"""
     return Vote.objects.create(employee=employee, menu=menu)
 
+
 class VotingResultsTests(TestCase):
     """Test voting results functionality"""
+
     def setUp(self):
         self.client = APIClient()
-        self.user = create_user(email='test@example.com', password='testpass123')
+        self.user = create_user(email="test@example.com", password="testpass123")
         self.client.force_authenticate(self.user)
 
     def test_no_votes(self):
@@ -62,7 +68,7 @@ class VotingResultsTests(TestCase):
         restaurant = create_restaurant()
         menu = create_menu(restaurant)
         create_vote(self.user, menu)
-        another_user = create_user(email='another@example.com', password='testpass123')
+        another_user = create_user(email="another@example.com", password="testpass123")
         create_vote(another_user, menu)
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -71,9 +77,11 @@ class VotingResultsTests(TestCase):
         """Test case with votes across multiple menus"""
         restaurant = create_restaurant()
         menu1 = create_menu(restaurant)
-        menu2 = create_menu(restaurant, date=timezone.now().date() + timezone.timedelta(days=1))
+        menu2 = create_menu(
+            restaurant, date=timezone.now().date() + timezone.timedelta(days=1)
+        )
         create_vote(self.user, menu1)
-        another_user = create_user(email='another@example.com', password='testpass123')
+        another_user = create_user(email="another@example.com", password="testpass123")
         create_vote(another_user, menu2)
         res = self.client.get(VOTING_RESULTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
